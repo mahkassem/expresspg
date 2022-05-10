@@ -4,14 +4,15 @@ import {
     getAllHandler,
     getByIdHander
 } from '../controllers/users.controller'
-import { createValidation } from '../validations/users.validations'
+import { authGuard } from '../utils/auth.service'
+import { createUserValidation } from '../validations/users.validations'
 
 const usersRoutes = Router()
 
-usersRoutes.get('/', getAllHandler)
+usersRoutes.get('/', authGuard, getAllHandler)
 
-usersRoutes.get('/:id', getByIdHander)
+usersRoutes.get('/:id', authGuard, getByIdHander)
 
-usersRoutes.post('/', createValidation, createHandler)
+usersRoutes.post('/', authGuard, createUserValidation, createHandler)
 
 export default usersRoutes

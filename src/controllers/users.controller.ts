@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
 import {
-    getAll,
-    getById,
-    create
+    getAllUsers,
+    getUserById,
+    createUser
 } from '../entities/users/users.repo'
 
 const getAllHandler = async (req: Request, res: Response) => {
     try {
-        const users = await getAll()
+        const users = await getAllUsers()
         res.send(users)
     } catch (err) {
         res.status(500).send(err)
@@ -17,7 +17,7 @@ const getAllHandler = async (req: Request, res: Response) => {
 const getByIdHander = async (req: Request, res: Response) => {
     try {
         const { id } = req.params
-        const user = await getById((id as unknown) as number)
+        const user = await getUserById((id as unknown) as number)
         if(!user) {
             res.status(404).send('User not found')
             return
@@ -30,8 +30,8 @@ const getByIdHander = async (req: Request, res: Response) => {
 
 const createHandler = async (req: Request, res: Response) => {
     try {
-        const { name, color } = req.body
-        const user = await create({ name, color })
+        const { name, color, email, password } = req.body
+        const user = await createUser({ name, color, email, password })
         res.status(201).send(user)
     } catch (err) {
         res.status(500).send(err)
