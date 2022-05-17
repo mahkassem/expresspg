@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 
 dotenv.config()
-const env = process.env.NODE_ENV || 'dev'
+const env = process.env.ENV || 'dev'
 
 const dbConfig = {
     host: process.env.DB_HOST,

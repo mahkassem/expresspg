@@ -10,7 +10,8 @@
         "db:up": "npx db-migrate up",
         "db:down": "npx db-migrate reset",
         "build": "npx tsc",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "npm run build && set ENV=test&& npx db-migrate --env test up&& jasmine && npx db-migrate --env test reset",
+        "test:clean": "set ENV=test&& npx db-migrate --env test reset"
     },
     "author": "",
     "license": "ISC",
@@ -34,6 +35,7 @@
         "@types/jsonwebtoken": "^8.5.8",
         "@types/morgan": "^1.9.3",
         "@types/pg": "^8.6.5",
+        "@types/supertest": "^2.0.12",
         "@typescript-eslint/eslint-plugin": "^5.21.0",
         "@typescript-eslint/parser": "^5.21.0",
         "eslint": "^8.14.0",
@@ -43,6 +45,7 @@
         "jasmine-spec-reporter": "^7.0.0",
         "nodemon": "^2.0.15",
         "ts-node": "^10.7.0",
-        "typescript": "^4.6.3"
+        "typescript": "^4.6.3",
+        "supertest": "^6.2.3"
     }
 }
