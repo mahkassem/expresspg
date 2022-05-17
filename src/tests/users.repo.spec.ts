@@ -2,7 +2,8 @@ import { User } from '../entities/users/user.model'
 import {
     createUser,
     getUserById,
-    getAllUsers
+    getAllUsers,
+    deleteUser
 } from '../entities/users/users.repo'
 
 let testUser: User = {
@@ -30,5 +31,11 @@ describe('Users Repository', () => {
     it('Should get all users', async () => {
         const users = await getAllUsers()
         expect(users.length).toBeGreaterThan(0)
+    })
+
+    // test delete user
+    it('Should delete a user', async () => {
+        const result = await deleteUser(userId)
+        expect(result).toBe(true);
     })
 })

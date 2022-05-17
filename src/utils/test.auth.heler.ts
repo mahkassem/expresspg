@@ -17,11 +17,12 @@ export const createTestUser = async (): Promise<TestUser> => {
         password: 'secret'
     }
 
-    let { name, color, email, password } = user;
+    let { email, password } = user;
 
     // hash password
     password = await bcrypt.hash(password + config.auth.bcryptPapper, config.auth.bcryptRounds)
-
+    user.password = password
+    
     // check if user exists
     let createdUser;
     createdUser = await getUserByEmail(email)
