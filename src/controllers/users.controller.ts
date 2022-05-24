@@ -5,11 +5,12 @@ import {
     getUserById,
     createUser
 } from '../entities/users/users.repo'
+import { PaginatedQuery } from '../interfaces/query.interface'
 import { uploadFileAsync } from '../utils/upload.service'
 
 const getAllHandler = async (req: Request, res: Response) => {
     try {
-        const users = await getAllUsers()
+        const users = await getAllUsers(req.query as unknown as PaginatedQuery)
         res.send(users)
     } catch (err) {
         res.status(500).send(err)

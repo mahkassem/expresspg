@@ -1,10 +1,15 @@
+import { PaginatedQuery, PaginatedResult } from "../../interfaces/query.interface";
 import DB from "../../utils/database";
 import { User } from "./user.model";
 
-const getAllUsers = async (): Promise<User[]> => {
-  const queryText = `SELECT * FROM users`;
-  const result = await DB.query(queryText);
-  return result.rows;
+const getAllUsers = async (q: PaginatedQuery): Promise<PaginatedResult<User>> => {
+  const queryText = `SELECT * FROM users LIMIT $1 OFFSET $2`;
+  const result = await DB.query(queryText, [(q.limit ?? 10), ((q.page ?? 1) - 1) * (q.limit ?? 10)]);
+  return {
+    page: q.page ?? 1,
+    limit: q.limit ?? 10,
+    models: result.rows,
+  };
 };
 
 const getUserById = async (id: number): Promise<User> => {

@@ -18,7 +18,9 @@ app.use(fileUpload({
 }))
 
 
-// serve static files
+/**
+ * ? Static
+ */
 app.use(express.static('www'))
 
 /**
