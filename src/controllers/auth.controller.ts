@@ -3,14 +3,22 @@ import { createUser, getUserByEmail } from '../entities/users/users.repo'
 import bcrypt from 'bcrypt'
 import config from '../config'
 import { generateToken } from '../utils/auth.service'
+import { uploadFileAsync } from '../utils/upload.service'
+import { UploadedFile } from 'express-fileupload'
 
 const registerHandler = async (req: Request, res: Response) => {
     try {
         let { name, color, email, password } = req.body
         // hash password
         password = await bcrypt.hash(password + config.auth.bcryptPapper, config.auth.bcryptRounds)
+        // upload avatar
+        let avatar;
+        if (req.files && req.files.avatarFile) {
+            const { avatarFile } = req.files as unknown as { avatarFile: UploadedFile }
+            avatar = await uploadFileAsync(avatarFile, 'avatars')
+        }
         // create user
-        const user = await createUser({ name, color, email, password })
+        const user = await createUser({ name, color, avatar, email, password })
         // delete password
         delete user.password
         // send user

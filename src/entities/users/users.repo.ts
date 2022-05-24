@@ -20,10 +20,11 @@ const getUserByEmail = async (email: string): Promise<User> => {
 };
 
 const createUser = async (user: User): Promise<User> => {
-  const queryText = `INSERT INTO users (name, color, email, password) VALUES ($1, $2, $3, $4) RETURNING *`;
+  const queryText = `INSERT INTO users (name, color, avatar, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
   const result = await DB.query(queryText, [
     user.name,
     user.color,
+    user.avatar ?? null,
     user.email,
     user.password,
   ]);
@@ -32,9 +33,9 @@ const createUser = async (user: User): Promise<User> => {
 
 // delete user method
 const deleteUser = async (id: number): Promise<boolean> => {
-    const queryText = `DELETE FROM users WHERE id = $1 `;
-    await DB.query(queryText, [id]);
-    return true;
+  const queryText = `DELETE FROM users WHERE id = $1 `;
+  await DB.query(queryText, [id]);
+  return true;
 };
 
 export { getAllUsers, getUserById, getUserByEmail, createUser, deleteUser };
