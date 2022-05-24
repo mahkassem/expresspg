@@ -18,6 +18,9 @@ app.use(fileUpload({
 }))
 
 
+// serve static files
+app.use(express.static('www'))
+
 /**
  * ? Middlewares
  */
